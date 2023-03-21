@@ -73,7 +73,7 @@ export default function App() {
     if (!e.target.files || e.target.files.length === 0) {
         setFigure(undefined)
         return
-      }else if (e.target.files[0].size > 2097152){
+      }else if (e.target.files[0].size > 5242880){
         alert("File is too big or to small!")
         setFigure(undefined)
         return
@@ -115,7 +115,7 @@ export default function App() {
               <label className="cursor-pointer block w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75" for="file_input" >Upload file</label>
               <input type="file" id="file_input" className="hidden" onChange={onSelectFile} style={styles.inputBox}/>
               {/* <input type="file" id="file_input" class="" onchange={onSelectFile} /> */}
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" >SVG, PNG, JPG or GIF (MAX. 2MB).</p>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" >SVG, PNG, JPG or GIF (MAX. 5MB).</p>
             </section>
 
             <section>
