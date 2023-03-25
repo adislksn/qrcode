@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
+import "./App.css";
 import QRCodeStyling from "qr-code-styling";
 import profile from "./assets/img/20210209_173309.jpg"
 
 const qrCode = new QRCodeStyling({
   dotsOptions: {
-    color: "#000000",
     type: "rounded"
+  },
+  cornersSquareOptions:{
+    type:"extra-rounded"
   },
   imageOptions: {
     crossOrigin: "anonymous",
@@ -16,8 +19,10 @@ const qrCode = new QRCodeStyling({
 
 export default function App() {
   const [url, setUrl] = useState("https://adislksn.github.io");
-  const [ratio, setRatio] = useState(300);
+  const [ratio, setRatio] = useState(1000);
   const [figure, setFigure] = useState();
+  const [coloredCorner, setColorcorner] = useState("#000000");
+  const [coloredInside, setColorinside] = useState("#000000");
   const [preview, setPreview] = useState();
   // const [selectedFile, setSelectedFile] = useState()
   const [fileExt, setFileExt] = useState("png");
@@ -45,6 +50,18 @@ export default function App() {
       image: preview
     });
   }, [preview]);
+
+  useEffect(() => {
+    qrCode.update({
+      dotsOptions:{color: coloredInside}
+    });
+  }, [coloredInside]);
+
+  useEffect(() => {
+    qrCode.update({
+      cornersSquareOptions:{color: coloredCorner}
+    });
+  }, [coloredCorner]);
 
   const onExtensionChange = (e) => {
     setFileExt(e.target.value);
@@ -120,7 +137,7 @@ export default function App() {
 
             <section>
               <label className="relative p-4 text-white font-bold text-lg"  for="text-input">Input Text</label>
-              <input className="block w-full mb-6 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"
+              <input className="caret-cyan-300 block w-full mb-6 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"
                   type="text" 
                   placeholder="Type something..." 
                   id="text-input"
@@ -129,10 +146,26 @@ export default function App() {
 
             <section>
               <label className="relative p-4 text-white font-bold text-lg" for="ratio-input">Image Ratio</label>
-              <input className="block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
+              <input className="caret-cyan-300 block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
                   type="text" 
                   id="ratio-input"
                   value={ratio} onChange={(e) => setRatio(e.target.value)} />
+            </section>
+            
+            <section>
+              <label className="relative p-4 text-white font-bold text-lg" for="inside-color-input">Inside Dots Color</label>
+              <input className="block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
+                  type="color" 
+                  id="inside-color-input"
+                  value={coloredInside} onChange={(e) => setColorinside(e.target.value)} />
+            </section>
+            
+            <section>
+              <label className="relative p-4 text-white font-bold text-lg" for="corner-color-input">Corner Dots Color</label>
+              <input className="block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
+                  type="color" 
+                  id="corner-color-input"
+                  value={coloredCorner} onChange={(e) => setColorcorner(e.target.value)} />
             </section>
 
         </section>
@@ -153,8 +186,10 @@ export default function App() {
             </section>
       </div>
       <div className="flex justify-center object-contain">
-        <div className="object-contain max-h-96 max-w-sm" ref={ref} />
+        <div className="qr-controller" ref={ref} />
       </div>
+      <footer className="py-4">
+      </footer>
       </div>
     </div>
   );

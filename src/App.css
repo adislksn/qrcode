@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.qr-controller canvas{
+  max-width: 300px !important;
+}
