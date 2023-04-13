@@ -27,6 +27,7 @@ export default function App() {
   // const [selectedFile, setSelectedFile] = useState()
   const [fileExt, setFileExt] = useState("png");
   const ref = useRef(null);
+  const [def_pic, setDef] = useState("Upload Custom Image");
 
   useEffect(() => {
     qrCode.append(ref.current);
@@ -80,6 +81,7 @@ export default function App() {
         return
     }
     const objectUrl = URL.createObjectURL(figure)
+    setDef(figure.name)
     setPreview(objectUrl)
 
     // free memory when ever this component is unmounted
@@ -129,7 +131,7 @@ export default function App() {
                 <i className="fa-solid fa-qrcode w-5 h-5 text-gray-500 dark:text-gray-400"></i>
             </div>
             <section className="relative py-4 self-center">
-              <label className="cursor-pointer block w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75" for="file_input" >Upload file</label>
+              <label className="cursor-pointer block w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75" for="file_input" >{def_pic}</label>
               <input type="file" id="file_input" className="hidden" onChange={onSelectFile} style={styles.inputBox}/>
               {/* <input type="file" id="file_input" class="" onchange={onSelectFile} /> */}
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" >SVG, PNG, JPG or GIF (MAX. 5MB).</p>
@@ -137,7 +139,7 @@ export default function App() {
 
             <section>
               <label className="relative p-4 text-white font-bold text-lg"  for="text-input">Input Text</label>
-              <input className="caret-cyan-300 block w-full mb-6 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"
+              <input className="caret-cyan-300 block w-full mb-6 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75 outline-cyan-400"
                   type="text" 
                   placeholder="Type something..." 
                   id="text-input"
@@ -146,44 +148,47 @@ export default function App() {
 
             <section>
               <label className="relative p-4 text-white font-bold text-lg" for="ratio-input">Image Ratio</label>
-              <input className="caret-cyan-300 block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
+              <input className="caret-cyan-300 block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75 outline-cyan-400"  
                   type="text" 
                   id="ratio-input"
                   value={ratio} onChange={(e) => setRatio(e.target.value)} />
             </section>
             
-            <section>
-              <label className="relative p-4 text-white font-bold text-lg" for="inside-color-input">Inside Dots Color</label>
-              <input className="block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
-                  type="color" 
-                  id="inside-color-input"
-                  value={coloredInside} onChange={(e) => setColorinside(e.target.value)} />
-            </section>
-            
-            <section>
-              <label className="relative p-4 text-white font-bold text-lg" for="corner-color-input">Corner Dots Color</label>
-              <input className="block w-full mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white shadow-md shadow-cyan-300 bg-opacity-75"  
-                  type="color" 
-                  id="corner-color-input"
-                  value={coloredCorner} onChange={(e) => setColorcorner(e.target.value)} />
-            </section>
-
         </section>
 
-            <section className="relative flex-row flex py-4 self-center">
-              <div className="px-2">
-                <select onChange={onExtensionChange} value={fileExt} className="text-black bg-cyan-300 hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
-                  <option value="png">PNG</option>
-                  <option value="jpeg">JPEG</option>
-                  <option value="webp">WEBP</option>
-                </select>
-              </div>
-              <div className="px-2">
-                <button className="text-black bg-cyan-300 hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2" onClick={onDownloadClick}>
-                  Download
-                </button>
-              </div>
-            </section>
+        <section className="grid grid-cols-2 gap-2 w-4/5 self-center pt-2">
+          <div className="">
+            <label className="relative p-4 text-white font-bold text-lg max-sm:text-sm max-[250px]:text-xs text-center" for="inside-color-input">Inside Dots Color</label>
+            <input className="w-full cursor-pointer mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 shadow-md shadow-cyan-300 bg-opacity-75"  
+                type="color" 
+                id="inside-color-input"
+                value={coloredInside} onChange={(e) => setColorinside(e.target.value)} />
+          </div>
+          
+          <div className="">
+            <label className="relative p-4 text-white font-bold text-lg max-sm:text-sm max-[250px]:text-xs text-center" for="corner-color-input">Corner Dots Color</label>
+            <input className="w-full cursor-pointer mb-4 p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 shadow-md shadow-cyan-300 bg-opacity-75"  
+                type="color" 
+                id="corner-color-input"
+                value={coloredCorner} onChange={(e) => setColorcorner(e.target.value)} />
+          </div>
+        </section>
+
+
+        <section className="relative flex-row flex py-4 self-center">
+          <div className="px-2">
+            <select onChange={onExtensionChange} value={fileExt} className="text-black bg-cyan-300 hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
+              <option value="png">PNG</option>
+              <option value="jpeg">JPEG</option>
+              <option value="webp">WEBP</option>
+            </select>
+          </div>
+          <div className="px-2">
+            <button className="text-black bg-cyan-300 hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2" onClick={onDownloadClick}>
+              Download
+            </button>
+          </div>
+        </section>
       </div>
       <div className="flex justify-center object-contain">
         <div className="qr-controller" ref={ref} />
